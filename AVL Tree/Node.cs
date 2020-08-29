@@ -11,7 +11,7 @@ namespace AVL_Tree
         public Node<T> leftChild { get; set; }
         public Node<T> rightChild { get; set; }
 
-        int childCount 
+        public int childCount
         {
             get
             {
@@ -20,13 +20,13 @@ namespace AVL_Tree
                 if (leftChild != null) count++;
                 if (rightChild != null) count++;
 
-                return count; 
+                return count;
             }
         }
 
-        int height { get; set; }
+        public int height { get; set; }
 
-        int balance
+        public int balance
         {
             get
             {
@@ -37,7 +37,7 @@ namespace AVL_Tree
         public Node(T Value)
         {
             value = Value;
-            height = 1; 
+            height = 1;
         }
 
     }
