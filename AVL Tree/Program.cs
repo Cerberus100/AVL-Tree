@@ -9,10 +9,11 @@ namespace AVL_Tree
             var avl = new AVL<int>();
 
 
-            avl.Insert(50);
-            avl.Insert(25);
+            avl.Insert(5);
             avl.Insert(10);
-            avl.rightRotate(avl.root);
+            avl.Insert(7);
+            avl.Insert(13);
+            var x = avl.findParent(avl.root.rightChild);
             ;
         }
     }

@@ -11,24 +11,6 @@ namespace AVL_Tree
         public Node<T> leftChild { get; set; }
         public Node<T> rightChild { get; set; }
 
-        public bool isLeft
-        {
-            get
-            {
-                if (parent == null || parent.leftChild != this) return false;
-                return true;
-            }
-        }
-
-        public bool isRight
-        {
-            get
-            {
-                if (parent == null || parent.rightChild != this) return false;
-                return true; 
-            }
-        }
-
         public int childCount
         {
             get

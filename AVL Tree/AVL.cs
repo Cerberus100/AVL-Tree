@@ -14,41 +14,68 @@ namespace AVL_Tree
         {
             if (node.balance >= -1 && node.balance <= 1) return;
 
-
-        }
-
-        public void rightRotate(Node<T> node)
-        {
-            //Check if root or if it has a parent.  change the root.  Change the parents connection
-
-
-
-
-            /*
-            Node<T> temp = node.leftChild.rightChild;
-
-            node.leftChild.rightChild = node;
-            node.leftChild.parent = node.parent;
-
-            if(node.parent != null)
+            if (node.balance < -1)
             {
-                if(node.isLeft)
-                {
-                    node.parent.leftChild = node.leftChild;
-                }
-                else
-                {
-                    node.parent.rightChild = node.leftChild;
-                }
+                node.leftChild = rightRotate(node);
             }
-
-            node.parent = node.leftChild;
-
-            node.leftChild = temp;    
-            */
-
-            //TODO: have karan show me how rightRotate works 
+            else
+            {
+                node.rightChild = leftRotate(node);
+            }
         }
+        //TODO: double check if find parent works, implement it into insert with balance and stuff. 
+        public Node<T> findParent(Node<T> node)
+        {
+            Node<T> p = parentRecur(root, node);
+
+            return p; 
+        }
+
+        private Node<T> parentRecur(Node<T> start, Node<T> node)
+        {
+            if(start == node) // if it's root
+            {
+                return null;
+            }
+            else if(start.value.CompareTo(node.value) > 0)
+            {
+                //
+
+                if (start.leftChild == node) return start; 
+
+                return parentRecur(start.leftChild, node);
+            }
+            else
+            {
+                //
+
+                if (start.rightChild == node) return start; 
+                return parentRecur(start.rightChild, node);
+            }
+        }
+
+        public Node<T> rightRotate(Node<T> node)
+        {
+            Node<T> temp = node.leftChild;
+
+            node.leftChild = temp.rightChild;
+
+            temp.rightChild = node; 
+
+            return temp;
+        }
+
+        public Node<T> leftRotate(Node<T> node)
+        {
+            Node<T> temp = node.rightChild;
+
+            node.rightChild = temp.leftChild;
+
+            temp.leftChild = node; 
+
+            return temp;
+        }
+            
 
         public void Insert (T value)
         {
@@ -75,6 +102,8 @@ namespace AVL_Tree
             {
                 node.rightChild = recInsert(node.rightChild, val);
             }
+
+            //implement balancing here
 
             return node;
         }
