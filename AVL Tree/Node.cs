@@ -7,8 +7,7 @@ namespace AVL_Tree
 {
     public class Node<T> where T : IComparable<T>
     {
-        T value;
-        public Node<T> parent { get; set; }
+        public T value;
         public Node<T> leftChild { get; set; }
         public Node<T> rightChild { get; set; }
 
