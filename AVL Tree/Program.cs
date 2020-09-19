@@ -8,11 +8,9 @@ namespace AVL_Tree
         {
             var avl = new AVL<int>();
 
-            avl.Insert(50);
-            avl.Insert(75);
-            avl.Insert(75);
-
-            var node = avl.findParent(avl.root);
+            avl.Insert(10);
+            avl.Insert(5);
+            avl.Insert(8);
 
             ;
         }

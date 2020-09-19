@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace AVL_Tree
@@ -10,21 +11,30 @@ namespace AVL_Tree
         public Node<T> root = null;
         public int Count = 0;
 
-        public void Balance(Node<T> node)
+        public Node<T> Balance(Node<T> node)
         {
-            if (node.balance >= -1 && node.balance <= 1) return;
-
             if (node.balance < -1)
             {
-                node.leftChild = rightRotate(node);
+                if (node.leftChild.balance >= 1)
+                {
+                    node.leftChild = leftRotate(node.leftChild);
+                }
+
+                node = rightRotate(node);
             }
-            else
+            else if (node.balance > 1)
             {
-                node.rightChild = leftRotate(node);
+                if (node.rightChild.balance <= -1)
+                {
+                    node.rightChild = rightRotate(node.rightChild);
+                }
+
+                node = leftRotate(node);
             }
+
+            return node;
         }
 
-        //TODO: double check if find parent works, implement it into insert with balance and stuff. 
         public Node<T> findParent(Node<T> node)
         {
             Node<T> p = parentRecur(root, node);
@@ -105,12 +115,25 @@ namespace AVL_Tree
             }
 
             //implement balancing here
-
-            return node;
+            return Balance(node);
         }
 
 
+        //TODO: Make a search function that returns the node with a given value. 
+        // finish delete
+        public bool Delete (T value)
+        {
 
+            var node = Search(value);
 
+            if (node == null)
+            {
+                return false;
+            }
+            root = recDelete(node, value);
+            Count--;
+            return true;
+        }
     }
+   
 }

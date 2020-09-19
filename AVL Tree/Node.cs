@@ -46,8 +46,7 @@ namespace AVL_Tree
 
                 if (leftHeight <= rightHeight) return rightHeight + 1;
                 else return leftHeight + 1; 
-            }
-      
+            }  
         }
 
         public int balance
