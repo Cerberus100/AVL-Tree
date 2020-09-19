@@ -23,25 +23,26 @@ namespace AVL_Tree
                 node.rightChild = leftRotate(node);
             }
         }
+
         //TODO: double check if find parent works, implement it into insert with balance and stuff. 
         public Node<T> findParent(Node<T> node)
         {
             Node<T> p = parentRecur(root, node);
 
-            return p; 
+            return p;
         }
 
-        private Node<T> parentRecur(Node<T> start, Node<T> node)
+        private Node<T> parentRecur(Node<T> start, Node<T> node) //recursion for findParent
         {
-            if(start == node) // if it's root
+            if (start == node) // if it's root
             {
                 return null;
             }
-            else if(start.value.CompareTo(node.value) > 0)
+            else if (start.value.CompareTo(node.value) > 0)
             {
                 //
 
-                if (start.leftChild == node) return start; 
+                if (start.leftChild == node) return start;
 
                 return parentRecur(start.leftChild, node);
             }
@@ -49,7 +50,7 @@ namespace AVL_Tree
             {
                 //
 
-                if (start.rightChild == node) return start; 
+                if (start.rightChild == node) return start;
                 return parentRecur(start.rightChild, node);
             }
         }
@@ -60,7 +61,7 @@ namespace AVL_Tree
 
             node.leftChild = temp.rightChild;
 
-            temp.rightChild = node; 
+            temp.rightChild = node;
 
             return temp;
         }
@@ -71,13 +72,13 @@ namespace AVL_Tree
 
             node.rightChild = temp.leftChild;
 
-            temp.leftChild = node; 
+            temp.leftChild = node;
 
             return temp;
         }
-            
 
-        public void Insert (T value)
+
+        public void Insert(T value)
         {
             root = recInsert(root, value);
             Count++;
