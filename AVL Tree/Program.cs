@@ -10,8 +10,9 @@ namespace AVL_Tree
 
             avl.Insert(10);
             avl.Insert(5);
-            avl.Insert(8);
+            avl.Insert(15);
 
+            avl.Delete(10);
             ;
         }
     }

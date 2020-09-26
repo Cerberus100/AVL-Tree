@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace AVL_Tree
@@ -37,32 +38,35 @@ namespace AVL_Tree
 
         public Node<T> findParent(Node<T> node)
         {
-            Node<T> p = parentRecur(root, node);
+            //Node<T> p = parentRecur(root, node);
 
-            return p;
-        }
+            Node<T> current = root;
 
-        private Node<T> parentRecur(Node<T> start, Node<T> node) //recursion for findParent
-        {
-            if (start == node) // if it's root
+            // if root
+            if (current == node)
             {
                 return null;
             }
-            else if (start.value.CompareTo(node.value) > 0)
+
+            // otherwise
+            while(current != null)
             {
-                //
+                if (current.leftChild == node || current.rightChild == node)
+                {
+                    return current;
+                }
+                if (node.value.CompareTo(current.value) < 0)
+                {
+                    current = current.leftChild;
+                }
+                else
+                {
+                    current = current.rightChild;
+                }
 
-                if (start.leftChild == node) return start;
-
-                return parentRecur(start.leftChild, node);
             }
-            else
-            {
-                //
 
-                if (start.rightChild == node) return start;
-                return parentRecur(start.rightChild, node);
-            }
+            return null;
         }
 
         public Node<T> rightRotate(Node<T> node)
@@ -119,21 +123,112 @@ namespace AVL_Tree
         }
 
 
-        //TODO: Make a search function that returns the node with a given value. 
-        // finish delete
-        public bool Delete (T value)
+        //TODO: Do tests for delete. do the traversals and contains function 
+        public bool Delete(T value)
         {
-
-            var node = Search(value);
+            Node<T> node = Search(value);
 
             if (node == null)
             {
                 return false;
             }
-            root = recDelete(node, value);
+
+            
+
+            if (node.childCount == 2)
+            {
+                Node<T> replacement = node.leftChild;
+
+                while (replacement.rightChild != null)
+                {
+                    replacement = replacement.rightChild; 
+                }
+
+                node.value = replacement.value;
+
+                node = replacement;
+            }
+
+            Node<T> parent = findParent(node);
+
+            if (node.childCount == 0) // if no children
+            {
+                if (parent == null)
+                {
+                    root = null; 
+                }
+                else
+                {
+                    if (parent.leftChild.Equals(node))
+                    {
+                        parent.leftChild = null; 
+                    }
+                    else
+                    {
+                        parent.rightChild = null; 
+                    }
+                }
+            }
+            else if (node.childCount == 1) // if one child
+            {
+                if (node.leftChild != null)
+                {
+                    if (parent == null)
+                    {
+                        root = node.leftChild;  
+                    }
+                    else
+                    {
+                        parent.leftChild = node.leftChild; 
+                    }
+                }
+                else
+                {
+                    if (parent == null)
+                    {
+                        root = node.rightChild;
+                    }
+                    else
+                    {
+                        parent.rightChild = node.rightChild; 
+                    }
+                }
+            }
+
+            if (parent != null)
+            {
+                Balance(parent);
+            }
+
             Count--;
             return true;
         }
+
+        public Node<T> Search(T value)
+        {
+            return recSearch(root, value);
+        }
+
+        private Node<T> recSearch(Node<T> node, T value)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            int compare = value.CompareTo(node.value);
+            if (compare == 0)
+            {
+                return node;
+            }
+            else if (compare < 0)
+            {
+                node = node.leftChild;
+            }
+            else
+            {
+                node = node.rightChild;
+            }
+            return recSearch(node, value);
+        }
     }
-   
 }
