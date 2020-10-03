@@ -4,16 +4,17 @@ namespace AVL_Tree
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args) 
         {
             var avl = new AVL<int>();
+            //TODO: test preOrder, finish inOrder and post order
 
-            avl.Insert(10);
-            avl.Insert(5);
-            avl.Insert(15);
+            avl.Insert(50);
+            avl.Insert(25);
+            avl.Insert(75);
+            avl.Insert(30);
 
-            avl.Delete(10);
-            ;
+            
         }
     }
 }

@@ -123,16 +123,27 @@ namespace AVL_Tree
         }
 
 
-        //TODO: Do tests for delete. do the traversals and contains function 
-        public bool Delete(T value)
+        public bool Delete (T value)
         {
-            Node<T> node = Search(value);
+            int beforeCount = Count;
+            root = deleteRecur(value);
 
-            if (node == null)
+            if (beforeCount == Count)//if nothing was removed
             {
                 return false;
             }
 
+            return true; 
+        }
+
+        private Node<T> deleteRecur(T value) //recursion for Delete
+        {
+            Node<T> node = Search(value);
+
+            if (findParent(node) == null)
+            {
+                return null; 
+            }
             
 
             if (node.childCount == 2)
@@ -195,13 +206,8 @@ namespace AVL_Tree
                 }
             }
 
-            if (parent != null)
-            {
-                Balance(parent);
-            }
-
             Count--;
-            return true;
+            return Balance (parent);
         }
 
         public Node<T> Search(T value)
@@ -229,6 +235,27 @@ namespace AVL_Tree
                 node = node.rightChild;
             }
             return recSearch(node, value);
+        }
+
+        public List<T> preOrder ()
+        {
+            List<T> values = new List<T>();
+
+            preOrderRec(root, values);
+
+            return values;
+        }
+
+        private void preOrderRec(Node<T> node, List<T> list)
+        {
+            if (node == null)
+            {
+                return; 
+            }
+
+            list.Add(node.value);
+            preOrderRec(node.leftChild, list);
+            preOrderRec(node.rightChild, list);
         }
     }
 }
