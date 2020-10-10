@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AVL_Tree
 {
@@ -14,7 +15,12 @@ namespace AVL_Tree
             avl.Insert(75);
             avl.Insert(30);
 
-            
+            var list = avl.breadthFirst();
+
+            for (int a = 0; a < list.Count; a++)
+            {
+                Console.WriteLine(list[a]);
+            }
         }
     }
 }

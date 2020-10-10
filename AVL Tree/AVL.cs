@@ -257,5 +257,73 @@ namespace AVL_Tree
             preOrderRec(node.leftChild, list);
             preOrderRec(node.rightChild, list);
         }
+
+        public List<T> inOrder ()
+        {
+            List<T> list = new List<T>();
+
+            inOrderRec(root, list);
+
+            return list;
+        }
+
+        private void inOrderRec (Node<T> node, List<T> list)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            inOrderRec(node.leftChild, list);
+            list.Add(node.value);
+            inOrderRec(node.rightChild, list);
+        }
+
+        public List<T> postOrder ()
+        {
+            List<T> list = new List<T>();
+            postOrderRec(root, list);
+            return list;
+        }
+
+        private void postOrderRec (Node<T> node, List<T> list)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            postOrderRec(node.leftChild, list);
+            postOrderRec(node.rightChild, list);
+            list.Add(node.value);
+        }
+
+        public List<T> breadthFirst ()
+        {
+            Queue<Node<T>> queue = new Queue<Node<T>>();
+            List<T> list = new List<T>();
+             
+            queue.Enqueue(root);
+
+
+            while (queue.Count > 0)
+            {
+                Node<T> node = queue.Dequeue();
+
+                list.Add(node.value);
+
+                if (node.leftChild != null)
+                {
+                    queue.Enqueue(node.leftChild);
+                }
+
+                if (node.rightChild != null)
+                {
+                    queue.Enqueue(node.rightChild);
+                }
+            }
+
+            return list; 
+        }
     }
 }
